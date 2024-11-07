@@ -233,7 +233,7 @@ function EmployeeData() {
 																minWidth: 120,
 																"& .MuiInputLabel-root": {
 																	fontFamily: "Poppins",
-																	color: "##969696",
+																	color: "#797878",
 																	fontSize: "12px",
 																	margin: "2px 0 0 0",
 																},

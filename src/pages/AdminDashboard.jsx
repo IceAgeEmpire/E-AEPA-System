@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography } from "@mui/material";
+import { FormControl, InputLabel, Select, MenuItem, Typography } from "@mui/material";
 import SchoolYearModal from "../modals/SchoolYearModal";
 import Button from "@mui/material/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -893,15 +893,55 @@ function AdminDashboard() {
                   <p style={{ fontSize: "13px" }}>
                     Employee count: {empPieCount}
                   </p>
-                  <select
+                      <FormControl
+															variant="outlined"
+															size="small"
+															sx={{
+																marginLeft: 2,
+																minWidth: 120,
+																"& .MuiInputLabel-root": {
+																	fontFamily: "Poppins",
+																	//colot: "#e0e0e0",
+																	fontSize: "12px",
+																	margin: "2px 0 0 0",
+																},
+																"& .MuiSelect-root": {
+																	fontFamily: "Poppins",
+																	fontSize: "13px",
+																},
+																"& .MuiOutlinedInput-notchedOutline": {
+																	borderColor: "#e0e0e0",
+																},
+																"&:hover .MuiOutlinedInput-notchedOutline": {
+																	borderColor: "#8C383E",
+																},
+															}}
+														>
+                            <InputLabel>Probitionaries</InputLabel>
+                              <Select
+																value={pieMonth}
+																onChange={handlePieMonthChange}
+																label="Probitions"
+																sx={{
+																	"& .MuiSelect-select": {
+																		fontFamily: "Poppins",
+																		fontSize: "13px",
+																	},
+																}}
+															>
+																<MenuItem value="3rd Month">3rd Month</MenuItem>
+																<MenuItem value="5th Month">5th Month</MenuItem>
+															</Select>
+														</FormControl>
+                            
+                  {/* <select
                     value={pieMonth}
                     onChange={handlePieMonthChange}
                     style={{ border: "2px solid #636E72", borderRadius: "5px" }}
                   >
                     <option value="3rd Month">3rd Month</option>
                     <option value="5th Month">5th Month</option>
-                    {/* Add more months as needed */}
-                  </select>
+                  </select>  */}
                 </div>
 
                 {empPieCount === 0 ? (
