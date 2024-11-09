@@ -11,6 +11,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { apiUrl } from "../config/config";
+import { Link } from "react-router-dom";
 
 function UserHome() {
   const [loggedUserData, setLoggedUserData] = useState({});
@@ -503,6 +504,7 @@ function UserHome() {
                 {filteredAdmins.map((staff, index) => {
                   return (
                     <li
+                    
                       key={index}
                       style={{
                         height: "50px",
@@ -606,7 +608,16 @@ function UserHome() {
                         }}
                       >
                         <h1>
-                          {staff.fName} {staff.lName}
+                        <Link to={`/ViewProfile/${staff.userID}`}
+                          style={{
+                            textDecoration: 'none',
+                          }}
+                          onMouseEnter={(e) => { e.target.style.textDecoration = "underline"; }}
+                          onMouseLeave={(e) => { e.target.style.textDecoration = "none"; }}
+                        >
+                        {staff.fName} {staff.lName}
+                        </Link>
+
                         </h1>
                         <p>{staff.position}</p>
                       </div>

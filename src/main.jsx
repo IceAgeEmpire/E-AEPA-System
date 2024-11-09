@@ -49,6 +49,13 @@ const router = createBrowserRouter([
             <ViewProfilePage />
           </PrivateRoute>
         ),
+      },      {
+        path: "/viewProfile/:userID",
+        element: (
+          <PrivateRoute requiredRoles={["EMPLOYEE", "HEAD"]}>
+            <ViewProfilePage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/takeEvaluation",

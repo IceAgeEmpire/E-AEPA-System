@@ -9,7 +9,9 @@ import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import Animated from "../components/motion";
 import { apiUrl } from '../config/config';
+import { useParams
 
+ } from "react-router-dom";
 const CustomAlert = ({ open, onClose, severity, message }) => {
 	return (
 		<Snackbar
@@ -41,7 +43,11 @@ const formatDate = (dateString) => {
 };
 
 function ViewProfilePage() {
-	const userID = sessionStorage.getItem("userID");
+	// Get userID from URL parameters (could be undefined)
+	const { userID: paramUserID } = useParams(); 
+	// If no userID in params, fall back to the logged-in user's ID
+	const userID = paramUserID || sessionStorage.getItem("userID");
+	
 	const [openSeePictureDialog, setOpenSeePictureDialog] = useState(false);
 	const [selectedUser, setSelectedUser] = useState({});
 	const [originalUser, setOriginalUser] = useState({});
@@ -458,19 +464,21 @@ function ViewProfilePage() {
 												mt: 0.5,
 											}}
 										>
-											{!isPrsnlEditMode && (
+											{ !isPrsnlEditMode && (
+
 												<Tooltip title="Edit Details" arrow>
-													<IconButton onClick={handlePrsnlEditClick}>
-														<BorderColorRoundedIcon
-															sx={{
-																fontSize: ".8em",
-																color: "rgba(140, 56, 62, 0.5)",
-																"&:hover": { color: "#8c383e" },
-															}}
-														/>
-													</IconButton>
+												<IconButton onClick={handlePrsnlEditClick}>
+													<BorderColorRoundedIcon
+														sx={{
+															fontSize: ".8em",
+															color: "rgba(140, 56, 62, 0.5)",
+															"&:hover": { color: "#8c383e" },
+														}}
+													/>
+												</IconButton>
 												</Tooltip>
-											)}
+											)
+											}
 										</Grid>
 									</Grid>
 								</Grid>
@@ -484,7 +492,7 @@ function ViewProfilePage() {
 													fontFamily: "Poppins",
 													fontSize: ".9em",
 													ml: 3.3,
-													mt: 2,
+													mt: 1,
 												}}
 											>
 												First Name:
