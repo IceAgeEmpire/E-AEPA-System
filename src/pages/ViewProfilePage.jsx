@@ -9,9 +9,7 @@ import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import Animated from "../components/motion";
 import { apiUrl } from '../config/config';
-import { useParams
-
- } from "react-router-dom";
+import { useParams} from "react-router-dom";
 const CustomAlert = ({ open, onClose, severity, message }) => {
 	return (
 		<Snackbar
@@ -65,6 +63,8 @@ function ViewProfilePage() {
 	const [image, setImage] = useState("");
 	const [profilePictureUrl, setProfilePictureUrl] = useState(null);
 	const [prevProfilePictureUrl, setPrevProfilePictureUrl] = useState(null);
+	const loggedInUserID = sessionStorage.getItem("userID");
+	const isOwnProfile = loggedInUserID === userID; 
 
 	const showSuccessAlert = (message) => {
 		setSuccessAlert({ open: true, message });
@@ -203,7 +203,7 @@ function ViewProfilePage() {
 		fetchProfilePicture();
 	}, [userID]);
 	const handleSeePictureDialog = async () => {
-		setOpenSeePictureDialog(true);
+		(isOwnProfile && setOpenSeePictureDialog(true))		
 	};
 	const handleCancel = () => {
 		setImage(null);
@@ -464,7 +464,7 @@ function ViewProfilePage() {
 												mt: 0.5,
 											}}
 										>
-											{ !isPrsnlEditMode && (
+											{ !isPrsnlEditMode && isOwnProfile && (
 
 												<Tooltip title="Edit Details" arrow>
 												<IconButton onClick={handlePrsnlEditClick}>
