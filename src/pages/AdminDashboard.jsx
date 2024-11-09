@@ -16,6 +16,7 @@ import axios from "axios";
 import { apiUrl } from "../config/config";
 import { isSameMonth } from "date-fns";
 import Animated from "../components/motion";
+import {AnimatePresence, motion} from "framer-motion";
 
 function AdminDashboard() {
   const [loading, setLoading] = useState(true);
@@ -612,9 +613,14 @@ function AdminDashboard() {
         <Typography variant="h5" fontWeight="bolder" fontFamily="Poppins">
           Dashboard
         </Typography>
-        <Button
+
+        <motion.button
           onClick={handleOpenSYModal}
-          sx={{
+          whileTap={{ scale: 0.9 }}
+          style={{
+            borderRadius:"4px",
+            height:"2.2rem",
+            color:"white",
             width: "12%",
             backgroundColor: "#8C383E",
             "&:hover": {
@@ -622,10 +628,9 @@ function AdminDashboard() {
             },
             fontFamily: "poppins",
           }}
-          variant="contained"
         >
           Manage S.Y.
-        </Button>
+        </motion.button>
       </div>
 
       {loading ? (
@@ -641,29 +646,21 @@ function AdminDashboard() {
           }}
         >
           {/** 1st part */}
+          {/** Employee Counts */}
           <div
-            style={{
-              height: "45vh",
-              width: "99%",
-              //backgroundColor: "lightgreen",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            {/** Employee Counts */}
-            <div
               style={{
-                height: "100%",
-                width: "19%",
+                height: "16%",
+                width: "100%",
                 //backgroundColor: "white",
+                gap: "30px",
                 display: "flex",
-                flexDirection: "column",
+                flexDirection: "row",
                 justifyContent: "space-between",
               }}
             >
               <div
                 style={{
-                  height: "31%",
+                  height: "100%",
                   width: "100%",
                   backgroundColor: "#8c383e",
                   borderRadius: "8px",
@@ -685,18 +682,18 @@ function AdminDashboard() {
                       height: "30%",
                       fontWeight: "500",
                       color: "white",
-                      fontSize: "15px",
+                      fontSize: "20px",
                     }}
                   >
                     <h3>3rd Month Probationaries</h3>
                   </div>
-
+                  {/*number and icon*/}
                   <div
                     style={{
                       height: "60%",
                       //backgroundColor: "lightsteelblue",
                       display: "flex",
-                      justifyContent: "space-between",
+                      //justifyContent: "space-between",
                       alignItems: "center",
                     }}
                   >
@@ -718,7 +715,7 @@ function AdminDashboard() {
               </div>
               <div
                 style={{
-                  height: "31%",
+                  height: "100%",
                   width: "100%",
                   backgroundColor: "#808080",
                   //backgroundColor: "#FFEEAD",
@@ -741,18 +738,18 @@ function AdminDashboard() {
                       height: "30%",
                       fontWeight: "500",
                       color: "white",
-                      fontSize: "15px",
+                      fontSize: "20px",
                     }}
                   >
                     <h3>5th Month Probationaries</h3>
                   </div>
-
+                  {/*number and icon*/}
                   <div
                     style={{
                       height: "60%",
                       //backgroundColor: "lightsteelblue",
                       display: "flex",
-                      justifyContent: "space-between",
+                      //justifyContent: "space-between",
                       alignItems: "center",
                     }}
                   >
@@ -774,7 +771,7 @@ function AdminDashboard() {
               </div>
               <div
                 style={{
-                  height: "31%",
+                  height: "100%",
                   width: "100%",
                   backgroundColor: "#F8C702",
                   borderRadius: "8px",
@@ -790,18 +787,19 @@ function AdminDashboard() {
                     flexDirection: "column",
                     justifyContent: "space-between",
                     color: "#333333",
+                    fontSize: "20px",
                   }}
                 >
                   <div style={{ height: "30%", fontWeight: "500" }}>
                     <h3>Regular Employees</h3>
                   </div>
-
+                  {/*number and icon*/}
                   <div
                     style={{
                       height: "60%",
                       //backgroundColor: "lightsteelblue",
                       display: "flex",
-                      justifyContent: "space-between",
+                      //justifyContent: "space-between",
                       alignItems: "center",
                     }}
                   >
@@ -816,11 +814,23 @@ function AdminDashboard() {
                 </div>
               </div>
             </div>
+          <div
+            style={{
+              height: "40vh",
+              width: "100%",
+              marginTop: "20px",
+              //backgroundColor: "lightgreen",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+
+            
             {/** Total Employee Graph */}
             <div
               style={{
                 height: "100%",
-                width: "44%",
+                width: "50%",
                 //backgroundColor: "lightgray",
               }}
             >
@@ -859,8 +869,8 @@ function AdminDashboard() {
             {/** Employee Evaluation Pie Chart */}
             <div
               style={{
-                height: "100%",
-                width: "34%",
+                height: "98%",
+                width: "50%",
                 //backgroundColor: "lightcyan",
                 //marginRight: "10px",
                 boxShadow:
@@ -883,7 +893,7 @@ function AdminDashboard() {
                   style={{
                     //backgroundColor: "yellow",
                     display: "flex",
-                    width: "99%",
+                    width: "100%",
                     margin: "auto",
                     justifyContent: "space-between",
                     alignItems: "center",
