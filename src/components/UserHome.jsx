@@ -608,7 +608,7 @@ function UserHome() {
                         }}
                       >
                         <h1>
-                        <Link to={`/ViewProfile/${staff.userID}`}
+                        <Link to={`/viewProfile/${staff.userID}`}
                           style={{
                             textDecoration: 'none',
                           }}

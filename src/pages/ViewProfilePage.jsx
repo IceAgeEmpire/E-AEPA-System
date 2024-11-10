@@ -427,7 +427,7 @@ function ViewProfilePage() {
 						</Grid>
 					</Paper>
 					<Grid container spacing={0.9}>
-						<Grid item xs={7.33} sx={{ mt: 1 }}>
+						{isOwnProfile ?(<Grid item xs={7.33} sx={{ mt: 1 }}>
 							<Paper
 								elevation={0}
 								sx={{
@@ -766,15 +766,14 @@ function ViewProfilePage() {
 									</>
 								)}
 							</Paper>
-						</Grid>
-						<Grid item xs={4.5} sx={{ mt: 1 }}>
+						</Grid>): (<Grid item xs={11.85} sx={{ mt: 1 }}>
 							<Paper
 								elevation={0}
 								sx={{
 									borderRadius: "5px",
 									width: "99%",
 									height: "12.4em",
-									ml: 2.7,
+									ml: 3,
 									boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.3)",
 								}}
 							>
@@ -786,28 +785,400 @@ function ViewProfilePage() {
 													fontFamily: "Poppins",
 													fontWeight: "bold",
 													fontSize: "1.3em",
+													color: "black",
 													mt: 1,
 												}}
 											>
-												Account Details
+												Other Personal Details
 											</Typography>
+										</Grid>
+										<Grid
+											item
+											xs
+											sx={{
+												display: "flex",
+												justifyContent: "right",
+												height: "3em",
+												mr: "1em",
+												mt: 0.5,
+											}}
+										>
+											{ !isPrsnlEditMode && isOwnProfile && (
+
+												<Tooltip title="Edit Details" arrow>
+												<IconButton onClick={handlePrsnlEditClick}>
+													<BorderColorRoundedIcon
+														sx={{
+															fontSize: ".8em",
+															color: "rgba(140, 56, 62, 0.5)",
+															"&:hover": { color: "#8c383e" },
+														}}
+													/>
+												</IconButton>
+												</Tooltip>
+											)
+											}
 										</Grid>
 									</Grid>
 								</Grid>
-								<Grid sm container>
-									<Grid item xs container spacing={2} sx={{ ml: 1 }}>
+								{/* for edit  */}
+								{isPrsnlEditMode ? (
+									<div style={{ display: "flex", flexDirection: "column" }}>
+										<div style={{ display: "flex", alignItems: "center" }}>
 											<Typography
 												color="text.secondary"
 												sx={{
 													fontFamily: "Poppins",
 													fontSize: ".9em",
-													mt: 5,
-													ml: 2,
+													ml: 3.3,
+													mt: 1,
 												}}
 											>
-												Username:{" "}
+												First Name:
+											</Typography>
+											<TextField
+												type="text"
+												name="fName"
+												value={selectedUser.fName}
+												onChange={handleDetailsChange}
+												variant="outlined"
+												size="small"
+												sx={{ ml: 3.2, mt: 1.5, width: "11em" }}
+												InputLabelProps={{
+													style: { fontFamily: "Poppins", fontSize: ".8em" },
+												}}
+												inputProps={{
+													style: { fontSize: ".8em", fontFamily: "Poppins" },
+												}}
+											/>
+											<Typography
+												color="text.secondary"
+												sx={{
+													fontFamily: "Poppins",
+													fontSize: ".9em",
+													ml: 9.2,
+													mt: 2,
+												}}
+											>
+												Gender:
+											</Typography>
+											<Select
+												labelId="gender"
+												id="gender"
+												value={selectedUser.gender}
+												name="gender"
+												sx={{
+													ml: 2.24,
+													mt: 1.5,
+													mr: 4,
+													width: "11.13em",
+													height: "2.5em",
+													fontSize: ".9em",
+													fontFamily: "Poppins",
+												}}
+												onChange={handleDetailsChange}
+											>
+												<MenuItem value={"Female"}>Female</MenuItem>
+												<MenuItem value={"Male"}>Male</MenuItem>
+												<MenuItem value={"Other"}>Other</MenuItem>
+											</Select>
+										</div>
+										<div style={{ display: "flex", alignItems: "center" }}>
+											<Typography
+												color="text.secondary"
+												sx={{
+													fontFamily: "Poppins",
+													fontSize: ".9em",
+													ml: 3.3,
+													mt: 2,
+												}}
+											>
+												Middle Name:
+											</Typography>
+											<TextField
+												type="text"
+												name="mName"
+												value={selectedUser.mName}
+												onChange={handleDetailsChange}
+												variant="outlined"
+												size="small"
+												sx={{ ml: 1, mt: 1.5, width: "11em" }}
+												InputLabelProps={{
+													style: { fontFamily: "Poppins", fontSize: ".8em" },
+												}}
+												inputProps={{
+													style: { fontSize: ".8em", fontFamily: "Poppins" },
+												}}
+											/>
+											<Typography
+												color="text.secondary"
+												sx={{
+													fontFamily: "Poppins",
+													fontSize: ".9em",
+													ml: 9,
+													mt: 2,
+												}}
+											>
+												{" "}
+												Mobile #:{" "}
+											</Typography>
+											<TextField
+												type="text"
+												name="contactNum"
+												value={selectedUser.contactNum}
+												onChange={handleDetailsChange}
+												variant="outlined"
+												size="small"
+												sx={{ ml: 1, mt: 1.5, width: "10em" }}
+												InputLabelProps={{ style: { fontFamily: "Poppins" } }}
+												inputProps={{
+													style: { fontSize: ".8em", fontFamily: "Poppins" },
+												}}
+											/>
+										</div>
+										<div style={{ display: "flex", alignItems: "center" }}>
+											<Typography
+												color="text.secondary"
+												sx={{
+													fontFamily: "Poppins",
+													fontSize: ".9em",
+													ml: 3.3,
+													mt: 2,
+												}}
+											>
+												Last Name:{" "}
+											</Typography>
+											<TextField
+												type="text"
+												name="lName"
+												value={selectedUser.lName}
+												onChange={handleDetailsChange}
+												variant="outlined"
+												size="small"
+												sx={{ ml: 3.4, mt: 1.5, width: "11em" }}
+												InputLabelProps={{ style: { fontFamily: "Poppins" } }}
+												inputProps={{
+													style: { fontSize: ".8em", fontFamily: "Poppins" },
+												}}
+											/>
+											<Button
+												variant="outlined"
+												sx={{
+													color: "#B4B4B4",
+													height: "2em",
+													width: "6em",
+													fontSize: ".9em",
+													mr: 2,
+													mt: 2,
+													ml: 20,
+													fontFamily: "Poppins",
+													backgroundColor: "transparent",
+													borderColor: "#E0E0E0",
+													padding: "1px 1px 0 0 ",
+													"&:hover": {
+														backgroundColor: "#E0E0E0",
+														borderColor: "#E0E0E0",
+														color: "#1E1E1E",
+													},
+												}}
+												style={{ textTransform: "none" }}
+												onClick={handlePrsnlEditClose}
+											>
+												Cancel
+											</Button>
+											<Button
+												variant="contained"
+												onClick={(e) => handleSavePrsnlChanges(e, selectedUser)}
+												sx={{
+													height: "2em",
+													width: "6em",
+													mr: 2,
+													mt: 2,
+													fontSize: ".9em",
+													fontFamily: "Poppins",
+													backgroundColor: "#8c383e",
+													padding: "1px 1px 0 0 ",
+													"&:hover": {
+														backgroundColor: "#762F34",
+														color: "white",
+													},
+												}}
+												style={{ textTransform: "none" }}
+												startIcon={<FontAwesomeIcon icon={faCircleCheck} style={{fontSize: "15px"}} />}
+												disabled={!saveDisabled}
+											>
+												Save{" "}
+											</Button>
+										</div>
+									</div>
+								) : (
+									<>
+										{/* for display only */}
+										<Grid container spacing={2}>
+											<Grid item xs={12} sm container>
+												<Grid
+													item
+													xs
+													container
+													direction="column"
+													spacing={2}
+													sx={{ ml: 1.5 }}
+												>
+													<Grid item xs>
+														<Typography
+															color="text.secondary"
+															sx={{
+																fontFamily: "Poppins",
+																mt: 2.5,
+																fontSize: ".9em",
+															}}
+														>
+															First Name:{" "}
+															<span
+																style={{
+																	color: "black",
+																	fontWeight: 500,
+																	fontSize: "16px",
+																}}
+															>
+																{selectedUser.fName}
+															</span>
+														</Typography>
+														<Typography
+															color="text.secondary"
+															sx={{
+																fontFamily: "Poppins",
+																mt: 2,
+																fontSize: ".9em",
+															}}
+														>
+															Middle Name:{" "}
+															<span style={{ color: "black", fontWeight: 500 }}>
+																{selectedUser.mName}
+															</span>
+														</Typography>
+														<Typography
+															color="text.secondary"
+															sx={{
+																fontFamily: "Poppins",
+																mt: 2,
+																fontSize: ".9em",
+															}}
+														>
+															Last Name:{" "}
+															<span style={{ color: "black", fontWeight: 500 }}>
+																{selectedUser.lName}
+															</span>
+														</Typography>
+													</Grid>
+												</Grid>
+											</Grid>
+											<Grid item xs={12} sm container>
+												<Grid item xs container direction="column" spacing={2}>
+													<Grid item xs sx={{ mt: 2.5 }}>
+														<Typography
+															color="text.secondary"
+															sx={{ fontFamily: "Poppins", fontSize: ".9em" }}
+														>
+															Gender:{" "}
+															<span style={{ color: "black", fontWeight: 500 }}>
+																{selectedUser.gender}
+															</span>
+														</Typography>
+														<Typography
+															color="text.secondary"
+															sx={{
+																fontFamily: "Poppins",
+																mt: 2,
+																fontSize: ".9em",
+															}}
+														>
+															Mobile Number:{" "}
+															<span style={{ color: "black", fontWeight: 500 }}>
+																{selectedUser.contactNum}
+															</span>
+														</Typography>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Grid>
+									</>
+								)}
+							</Paper>
+						</Grid>
+
+						)}
+						{isOwnProfile &&
+							(<Grid item xs={4.5} sx={{ mt: 1 }}>
+								<Paper
+									elevation={0}
+									sx={{
+										borderRadius: "5px",
+										width: "99%",
+										height: "12.4em",
+										ml: 2.7,
+										boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.3)",
+									}}
+								>
+									<Grid item xs={12} sm container>
+										<Grid item xs container spacing={2} sx={{ ml: 1 }}>
+											<Grid item xs>
+												<Typography
+													sx={{
+														fontFamily: "Poppins",
+														fontWeight: "bold",
+														fontSize: "1.3em",
+														mt: 1,
+													}}
+												>
+													Account Details
+												</Typography>
+											</Grid>
+										</Grid>
+									</Grid>
+									<Grid sm container>
+										<Grid item xs container spacing={2} sx={{ ml: 1 }}>
+												<Typography
+													color="text.secondary"
+													sx={{
+														fontFamily: "Poppins",
+														fontSize: ".9em",
+														mt: 5,
+														ml: 2,
+													}}
+												>
+													Username:{" "}
+													<span style={{ color: "black", fontWeight: 500 }}>
+														{selectedUser.username}
+													</span>
+												</Typography>
+											<Grid
+												item
+												xs
+												sx={{
+													display: "flex",
+													justifyContent: "left",
+													height: "3em",
+													mr: "1em",
+													mt: 2,
+												}}
+											>
+											</Grid>
+										</Grid>
+									</Grid>
+									<Grid item sm container>
+											<Typography
+												color="text.secondary"
+												sx={{
+													fontFamily: "Poppins",
+													fontSize: ".9em",
+													mt: 2,
+													ml: 3,
+												}}
+											>
+												Password:{" "}
 												<span style={{ color: "black", fontWeight: 500 }}>
-													{selectedUser.username}
+													**********
 												</span>
 											</Typography>
 										<Grid
@@ -816,44 +1187,17 @@ function ViewProfilePage() {
 											sx={{
 												display: "flex",
 												justifyContent: "left",
-												height: "3em",
-												mr: "1em",
+												height: "2em",
+												ml: 2,
 												mt: 2,
 											}}
 										>
 										</Grid>
 									</Grid>
-								</Grid>
-								<Grid item sm container>
-										<Typography
-											color="text.secondary"
-											sx={{
-												fontFamily: "Poppins",
-												fontSize: ".9em",
-												mt: 2,
-												ml: 3,
-											}}
-										>
-											Password:{" "}
-											<span style={{ color: "black", fontWeight: 500 }}>
-												**********
-											</span>
-										</Typography>
-									<Grid
-										item
-										xs
-										sx={{
-											display: "flex",
-											justifyContent: "left",
-											height: "2em",
-											ml: 2,
-											mt: 2,
-										}}
-									>
-									</Grid>
-								</Grid>
-							</Paper>
-						</Grid>
+								</Paper>
+							</Grid>)
+						}
+						
 					</Grid>
 					<Paper
 						elevation={0}
@@ -935,8 +1279,8 @@ function ViewProfilePage() {
 									xs
 									container
 									direction="column"
-									spacing={2}
-									sx={{ ml: 2 }}
+									spacing={0}
+									sx={{ ml: 0 }}
 								>
 									<Grid item xs sx={{ mt: 6.5 }}>
 										{selectedUser.empStatus !== "Regular" && (
