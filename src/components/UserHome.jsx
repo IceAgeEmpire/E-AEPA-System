@@ -583,18 +583,27 @@ function UserHome() {
                           //border: "1px solid black",
                         }}
                       >
-                        <img
-                          style={{
-                            borderRadius: "50%",
-                            height: "100%",
-                          }}
-                          src={
-                            staff?.profilePic
-                              ? base64ToDataURL(staff.profilePic)
-                              : null
-                          }
-                          alt=""
-                        />
+                        {
+                          staff?.profilePic ?
+                            <img
+                            style={{
+                              borderRadius: "50%",
+                              height: "100%",
+                            }}
+                            src={base64ToDataURL(staff.profilePic)} 
+                            alt=""
+                            />
+                          :(
+                            <img
+                              style={{
+                                borderRadius: "50%",
+                                height: "100%",
+                              }}
+                              src="/user.png" 
+                              alt=""
+                              />
+                              )
+                          } 
                       </div>
                       <div
                         style={{
