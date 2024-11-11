@@ -136,6 +136,8 @@ function ManageAccount() {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isDeleteDisabled, setDeleteDisabled] = useState(true);
+  const [countdown, setCountdown] = useState(3); // Disable the delete button by this amount of seconds
   const itemsPerPage = 10; // Adjust this based on your needs
   const pagesPerGroup = 5;
 
@@ -552,6 +554,26 @@ function ManageAccount() {
     }
   }, [firstname, lastname]);
 
+  //Delete confirmation countdown
+  useEffect(() => {
+    if (openDeleteDialog) {
+
+      const timer = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev === 1) {
+            clearInterval(timer); 
+            setDeleteDisabled(false); 
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+    
+      return () => clearInterval(timer);
+    }
+  }, [openDeleteDialog]);
+
   const handleClickAddUserBtn = () => {
     setOpenRegistrationDialog(true);
   };
@@ -719,6 +741,7 @@ function ManageAccount() {
     const selectedUser = rows.find((user) => user.userID === userID);
     setSelectedUser(selectedUser);
     setopenDeleteDialog(true);
+    setCountdown(3);
     setUpdateFetch(!updateFetch);
   };
 
@@ -740,6 +763,7 @@ function ManageAccount() {
       showSuccessAlert("User deleted successfully");
       setUpdateFetch((prev) => !prev);
       setopenDeleteDialog(false);
+      setDeleteDisabled(true);
     } catch (error) {
       console.error("Error deleting user:", error);
     }
@@ -764,9 +788,10 @@ function ManageAccount() {
     setdept("");
     setRole("");
     setWorkIDInvalid(false);
-
+    setDeleteDisabled(true);
     setopenDeleteDialog(false);
     setOpenEditDialog(false);
+    
   };
 
   const tabStyle = {
@@ -2983,13 +3008,17 @@ function ManageAccount() {
                 color: "black",
                 display: "flex",
                 justifyContent: "center",
-                mt: "1.3em",
               }}
             >
               Are you sure you want to delete this user account?
             </DialogContentText>
           </DialogContent>
-          <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
+          <DialogActions sx={{
+            display: "flex",
+            justifyContent: "center",
+            mb: "1rem"
+            
+            }}>
             <Button
               onClick={() => handleYesDelBtn(selectedUser.userID)}
               variant="contained"
@@ -3002,8 +3031,9 @@ function ManageAccount() {
                 color: "black",
                 "&:hover": { bgcolor: "#F8C702", color: "black" },
               }}
+              disabled={isDeleteDisabled}
             >
-              Yes
+            {isDeleteDisabled ? `${countdown}` : "Yes"}
             </Button>
             <Button
               onClick={handleClickCloseBtn}
