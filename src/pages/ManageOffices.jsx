@@ -25,6 +25,9 @@ import Animated from "../components/motion";
 import { apiUrl } from '../config/config';
 
 const ManageOffices = () => {
+	const [countdown, setCountdown] = useState(3); // Disable the delete button by this amount of seconds
+	const [isDeleteDisabled, setDeleteDisabled] = useState(true);
+	const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 	const loggedId = sessionStorage.getItem("userID");
 	const [departments, setDepartments] = useState([]);
 	const [filteredDepartments, setFilteredDepartments] = useState([]);
@@ -163,6 +166,12 @@ useEffect(() => {
 		setDepartmentToDelete(deptId);
 		setShowConfirmationDialog(!showConfirmationDialog);
 	};
+	const handleCancelDialog = () => {
+		setOpenDeleteDialog(false)
+		toggleConfirmationDialog();
+		setShowEditModal(false)
+		setShowAddDepartmentModal(false);
+	}
 
 	const confirmDeleteDepartment = async () => {
 		try {
@@ -176,6 +185,7 @@ useEffect(() => {
 			setFilteredDepartments(updatedUsers.data);
 			showSnackbar("Department deleted successfully", "success");
 			toggleConfirmationDialog();
+			setOpenDeleteDialog(false)
 		} catch (error) {
 			showSnackbar("Failed to delete department due to an error", "error");
 			console.error("Error deleting user:", error);
@@ -195,7 +205,10 @@ useEffect(() => {
 	};
 
 	const handleDeleteUser = (deptId) => {
+		setCountdown(3);
 		toggleConfirmationDialog(deptId);
+		setOpenDeleteDialog(true);
+		setDeleteDisabled(true)
 	};
 	//Department Mapping
 
@@ -440,6 +453,22 @@ useEffect(() => {
 		);
 	};
 
+	//Delete confirmation countdown
+	useEffect(() => {
+		if (openDeleteDialog) {
+		  const timer = setInterval(() => {
+			setCountdown((prev) => {
+			  if (prev === 1) {
+				clearInterval(timer); 
+				setDeleteDisabled(false); 
+				return 0;
+			  }
+			  return prev - 1;
+			});
+		  }, 1000);
+		  return () => clearInterval(timer);
+		}
+	  }, [toggleConfirmationDialog]);
 	return (
 		<Animated>
 			<div>
@@ -703,7 +732,7 @@ useEffect(() => {
 					</div>
 				</div>
 				{/* DeleteDepartmentModal */}
-				{showConfirmationDialog && (
+				<Dialog open={openDeleteDialog} onClose={handleCancelDialog}>
 					<div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
 						<div className="bg-white rounded-lg shadow-md w-auto h-44">
 							<div
@@ -727,7 +756,7 @@ useEffect(() => {
 									<Button
 										type="button"
 										variant="outlined"
-										onClick={() => toggleConfirmationDialog()}
+										onClick={handleCancelDialog}
 										sx={{
 											marginRight: "8px",
 											borderColor: "#B4B4B4",
@@ -748,6 +777,7 @@ useEffect(() => {
 										onClick={confirmDeleteDepartment}
 										variant="contained"
 										color="primary"
+										disabled={isDeleteDisabled}
 										sx={{
 											backgroundColor: "#8C383E",
 											width: "18%",
@@ -759,16 +789,16 @@ useEffect(() => {
 											},
 										}}
 									>
-										Yes
+                    				{isDeleteDisabled ? `${countdown}` : "Yes"}
 									</Button>
 								</div>
 							</div>
 						</div>
 					</div>
-				)}
+				</Dialog>
 
 				{/* EditDepartmentModal */}
-				{showEditModal && (
+				<Dialog open={showEditModal} onClose={handleCancelDialog}>
 					<div className="fixed inset-0 z-50 flex items-center justify-center">
 						<div className="bg-white rounded-lg shadow-md w-auto h-auto">
 							<EditDepartmentModal
@@ -778,9 +808,10 @@ useEffect(() => {
 							/>
 						</div>
 					</div>
-				)}
+				</Dialog>
 				{/* AddDepartmentModal */}
-				{showAddDepartmentModal && (
+				<Dialog open={showAddDepartmentModal} onClose={handleCancelDialog}>
+
 					<div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
 						<div className="bg-white rounded-lg shadow-md w-1/3">
 							<div
@@ -894,8 +925,7 @@ useEffect(() => {
 							</div>
 						</div>
 					</div>
-				)}
-
+				</Dialog>
 				{/* Department Details Dialog */}
 				{showDetailsDialog && (
 					<Dialog

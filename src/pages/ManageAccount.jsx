@@ -29,6 +29,7 @@ import {
   CircularProgress,
   Card,
   InputAdornment,
+  Divider
 } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
@@ -743,6 +744,7 @@ function ManageAccount() {
     setopenDeleteDialog(true);
     setCountdown(3);
     setUpdateFetch(!updateFetch);
+    setDeleteDisabled(true)
   };
 
   const handleYesDelBtn = async (userID) => {
@@ -788,7 +790,6 @@ function ManageAccount() {
     setdept("");
     setRole("");
     setWorkIDInvalid(false);
-    setDeleteDisabled(true);
     setopenDeleteDialog(false);
     setOpenEditDialog(false);
     
@@ -2959,103 +2960,70 @@ function ManageAccount() {
         </Dialog>
 
         {/*dialog - DELETE */}
-        <Dialog open={openDeleteDialog} onClose={handleClickCloseBtn}>
-          <Box
-            sx={{
-              bgcolor: "#8c383e",
-              height: "2em",
-              width: "100%",
-              display: "flex",
-              justifyContent: "right",
-            }}
-          >
-            <Grid container>
-              <Grid item xs={12}>
-                <Grid
-                  container
-                  spacing={0.6}
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontWeight: "bold",
-                    color: "white",
-                    backgroundColor: "transparent",
-                    alignItems: "center",
-                  }}
+          <Dialog open={openDeleteDialog} onClose={handleClickCloseBtn}>
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
+              <div className="bg-white rounded-lg shadow-md w-auto h-44">
+                <div
+                  className="p-2 font-medium text-lg text-white rounded-t-lg"
+                  style={{ backgroundColor: "#8C383E", border: "none" }}
                 >
-                  <Grid item sx={{ height: "2em", ml: ".3em", mt: ".3em" }}>
-                    <FontAwesomeIcon
-                      icon={faTrash}
-                      sx={{ color: "white", fontSize: "1.5em" }}
-                    />
-                  </Grid>
-                  <Grid item>Delete User Account</Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-            <IconButton
-              onClick={handleClickCloseBtn}
-              sx={{ "&:hover": { color: "#F8C702" } }}
-            >
-              <HighlightOffOutlinedIcon
-                sx={{ fontSize: "1em", color: "white" }}
-              />
-            </IconButton>
-          </Box>
-          <DialogContent>
-            <DialogContentText
-              sx={{
-                fontFamily: "Poppins",
-                color: "black",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              Are you sure you want to delete this user account?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions sx={{
-            display: "flex",
-            justifyContent: "center",
-            mb: "1rem"
-            
-            }}>
-            <Button
-              onClick={() => handleYesDelBtn(selectedUser.userID)}
-              variant="contained"
-              style={{ textTransform: "none", fontFamily: "Poppins" }}
-              sx={{
-                borderRadius: "20px",
-                fontFamily: "Poppins",
-                bgcolor: "rgba(248, 199, 2, 0.8)",
-                height: "2.3em",
-                color: "black",
-                "&:hover": { bgcolor: "#F8C702", color: "black" },
-              }}
-              disabled={isDeleteDisabled}
-            >
-            {isDeleteDisabled ? `${countdown}` : "Yes"}
-            </Button>
-            <Button
-              onClick={handleClickCloseBtn}
-              style={{ textTransform: "none", fontFamily: "Poppins" }}
-              sx={{
-                borderRadius: "20px",
-                fontFamily: "Poppins",
-                height: "2.3em",
-                color: "black",
-                ml: "1em",
-                "&:hover": {
-                  bgcolor: "rgba(248, 199, 2, 0.2)",
-                  color: "black",
-                },
-              }}
-            >
-              {" "}
-              No
-            </Button>
-          </DialogActions>
-        </Dialog>
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    className="mr-2 ml-2"
+                    style={{ color: "white", fontSize: "1rem" }}
+                  />
+                  Delete User Account
+                </div>
 
+                <div className="p-5">
+                  <p className="mt-1 mb-5">
+                    Are you sure you want to delete this user account?
+                  </p>
+                  <Divider />
+                  <div className="mt-4 mb-4 flex justify-end">
+                    <Button
+                      type="button"
+                      variant="outlined"
+                      onClick={() => handleClickCloseBtn()}
+                      sx={{
+                        marginRight: "8px",
+                        borderColor: "#B4B4B4",
+                        color: "#1E1E1E",
+                        width: "18%",
+                        textTransform: "none",
+                        fontFamily: "Poppins",
+                        "&:hover": {
+                          backgroundColor: "#ECECEE",
+                          borderColor: "#ECECEE",
+                          color: "#1E1E1E",
+                        },
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={()=> handleYesDelBtn(selectedUser.userID)}
+                      variant="contained"
+                      color="primary"
+                      disabled={isDeleteDisabled}
+                      sx={{
+                        backgroundColor: "#8C383E",
+                        width: "18%",
+                        borderRadius: "5px 5px",
+                        textTransform: "none",
+                        fontFamily: "Poppins",
+                        "&:hover": {
+                          backgroundColor: "#762F34",
+                        },
+                      }}
+                    >
+                    {isDeleteDisabled ? `${countdown}` : "Yes"}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Dialog>
         <CustomAlert
           open={successAlert.open}
           onClose={() => setSuccessAlert({ ...successAlert, open: false })}
