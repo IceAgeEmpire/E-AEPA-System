@@ -113,7 +113,7 @@ function ActivityLogs() {
     {
       id: "activity",
       label: (
-        <div style={{ display: 'flex', alignItems: 'left', justifyContent: 'left' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'left' }}>
           Activity
           <IconButton onClick={()=> requestSort('activity')} sx={{color:'white', width:"1.3em",height:'1.3em', ml:'.6vh',}}><SwapVertRoundedIcon fontSize="medium"  /></IconButton>
         </div>
@@ -129,10 +129,15 @@ function ActivityLogs() {
     },
     {
       id: "timestamp",
-      label: "Timestamp",
+      label: (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          Timestamp
+          <IconButton onClick={()=> requestSort('timestamp')} sx={{color:'white', width:"1.3em",height:'1.3em', ml:'.6vh',}}><SwapVertRoundedIcon fontSize="medium"  /></IconButton>
+        </div>
+      ),
       minWidth: 90,
       align: "center",
-      format: (value) => (value ? format(parseISO(value), 'yyyy-MM-dd , hh:mm a').replace(/am|pm/, match => match.toUpperCase()) : ""),
+      format: (value) => (value ? format(parseISO(value), 'MMM d, yyyy, hh:mm a').replace(/am|pm/, match => match.toUpperCase()) : ""),
     },
   ];
 
@@ -219,7 +224,7 @@ function ActivityLogs() {
                               sx={{
                                 fontFamily: "Poppins",
                                  fontWeight: 500,
-                                textAlign: column.id !== "timestamp" ? "left" : "center", // Align left for 'activity' and 'actDetails', center for 'timestamp'
+                                textAlign: "left",
                                 paddingLeft: column.id !== "timestamp" ? "7vh" : 0, // Add padding for 'activity' column
                               }}
                               key={`${row.activityID}-${column.id}`}
