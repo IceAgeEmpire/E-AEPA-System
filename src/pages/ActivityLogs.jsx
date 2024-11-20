@@ -181,102 +181,26 @@ function ActivityLogs() {
   return (
     <div>
       <Animated>
-        <Typography ml={6.5} mt={3} sx={{ fontFamily: "Poppins", fontWeight: "bold", fontSize: "1.5em" }}>
+      <div style={{
+        display:"flex",
+        marginTop:"12px",
+        justifyItems:"center",
+        justifyContent:"space-between",
+      }}>
+        <Typography ml={6.5} sx={{ alignContent:"center",fontFamily: "Poppins", fontWeight: "bold", fontSize: "1.5em" }}>
           Activity Logs
         </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            "& > :not(style)": { ml: 6, mt: 4, width: "93.5%" },
-          }}
-        >
-          <Grid container spacing={1.5} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
-              <TableContainer  sx={{ borderRadius: "5px 5px 0 0 ", maxHeight: "100%",position:'relative', border:'1px solid lightgray'}}>
-                <Table stickyHeader aria-label="sticky table" size="small">
-                  <TableHead sx={{ height: "3em" }}>
-                    <TableRow>
-                      {columnsHeader.map((column) => (
-                        <TableCell
-                          sx={{ fontFamily: "Poppins", bgcolor: "#8c383e", color: "white", fontWeight: 500, width: "10%", paddingLeft: column.id === "activity" ? "15vh" : 0 }}
-                          key={column.id}
-                          align={column.align}
-                          style={{ minWidth: column.minWidth }}
-                        >
-                          {column.label}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  {hasData ? (
-                    <TableBody>
-                      {paginatedRows.map((row) => (
-                        <TableRow
-                          sx={{
-                            bgcolor: "white",
-                            "&:hover": { backgroundColor: "#FFECA1", color: "black" },
-                          }}
-                          key={row.activityID}
-                        >
-                          {columnsHeader.map((column) => (
-                            <TableCell
-                            component="th" scope="row"
-                              sx={{
-                                fontFamily: "Poppins",
-                                 fontWeight: 500,
-                                textAlign: "left",
-                                paddingLeft: column.id !== "timestamp" ? "7vh" : 0, // Add padding for 'activity' column
-                              }}
-                              key={`${row.activityID}-${column.id}`}
-                              align={column.align}
-                            >
-                              {column.id === "activity" ? (
-                                <span>
-                                  {getActivityIcon(row[column.id])} {row[column.id]}
-                                </span>
-                              ) : (
-                                column.format ? column.format(row[column.id]) : row[column.id]
-                              )}
-                            </TableCell>
-                          ))}
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  ) : (
-                    <TableBody>
-                      <TableRow>
-                        <TableCell sx={{ bgcolor: 'white', height: '5em', }} colSpan={columnsHeader.length} align="center">
-                          <Typography
-                            sx={{
-                              textAlign: "center",
-                              fontFamily: "Poppins",
-                              fontSize: "17px",
-                              color: "#1e1e1e",
-                              fontWeight: 500,
-                              padding: "25px",
-                            }}
-                          >
-                            The activity log is currently empty.
-                          </Typography>
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  )}
-                </Table>
-              </TableContainer>
-          </Grid>
-        </Box>
-        { /* Pagination */}
         <div
-          className="rounded-b-lg mt-2 border-gray-200 px-4 py-2 ml-9"
+          className="rounded-b-lg border-gray-200 px-4 py-2"
           style={{
-            position: "absolute", // Change to relative to keep it in place
-            bottom: 100,
-            left: '24%',
-            transform: "translateX(-50%)",
-            display: "flex",
-            alignItems: "center",
-            ml: '4em'
+            // position: "absolute", // Change to relative to keep it in place
+            // bottom: 100,
+            // left: '24%',
+            // transform: "translateX(-50%)",
+            // paddingBottom: "16px",
+            // display: "flex",
+            // alignItems: "center",
+            // ml: '4em'
           }}
         >
           <ol className="flex justify-end gap-1 text-xs font-medium">
@@ -340,6 +264,91 @@ function ActivityLogs() {
             </li>
           </ol>
         </div>
+      </div>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            "& > :not(style)": { ml: 6, mt: 1, mb: 2, width: "93.5%" },
+          }}
+        >
+          <Grid container spacing={1.5} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+              <TableContainer  sx={{ borderRadius: "5px 5px 0 0 ", maxHeight: "100%",position:'relative', border:'1px solid lightgray'}}>
+                <Table stickyHeader aria-label="sticky table" size="small">
+                  <TableHead sx={{ height: "3em" }}>
+                    <TableRow>
+                      {columnsHeader.map((column) => (
+                        <TableCell
+                          sx={{ fontFamily: "Poppins", bgcolor: "#8c383e", color: "white", fontWeight: 500, width: "10%", paddingLeft: column.id === "activity" ? "15vh" : 0 }}
+                          key={column.id}
+                          align={column.align}
+                          style={{ minWidth: column.minWidth }}
+                        >
+                          {column.label}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  {hasData ? (
+                    <TableBody>
+                      {paginatedRows.map((row) => (
+                        <TableRow
+                          sx={{
+                            bgcolor: "white",
+                            "&:hover": { backgroundColor: "#FFECA1", color: "black" },
+                          }}
+                          key={row.activityID}
+                        >
+                          {columnsHeader.map((column) => (
+                            <TableCell
+                            component="th" scope="row"
+                              sx={{
+                                fontFamily: "Poppins",
+                                 fontWeight: 500,
+                                textAlign: column.id !== "timestamp" ? "left" : "left", // Align left for 'activity' and 'actDetails', center for 'timestamp'
+                                paddingLeft: column.id !== "timestamp" ? "7vh" : 0, // Add padding for 'activity' column
+                              }}
+                              key={`${row.activityID}-${column.id}`}
+                              align={column.align}
+                            >
+                              {column.id === "activity" ? (
+                                <span>
+                                  {getActivityIcon(row[column.id])} {row[column.id]}
+                                </span>
+                              ) : (
+                                column.format ? column.format(row[column.id]) : row[column.id]
+                              )}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  ) : (
+                    <TableBody>
+                      <TableRow>
+                        <TableCell sx={{ bgcolor: 'white', height: '5em', }} colSpan={columnsHeader.length} align="center">
+                          <Typography
+                            sx={{
+                              textAlign: "center",
+                              fontFamily: "Poppins",
+                              fontSize: "17px",
+                              color: "#1e1e1e",
+                              fontWeight: 500,
+                              padding: "25px",
+                            }}
+                          >
+                            The activity log is currently empty.
+                          </Typography>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  )}
+                </Table>
+              </TableContainer>
+          </Grid>
+        </Box>
+        { /* Pagination */}
+        
       </Animated>
     </div>
   );
